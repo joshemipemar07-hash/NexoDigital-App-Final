@@ -25,5 +25,5 @@ Este repositorio alberga la entrega final del proyecto **Nexo Digital**, estruct
 ---
 
 ## 👨‍💻 Autor
-* **Desarrollador:** Joshua Perez
-* **Institución:** UTSJR
+* **Desarrollador:** Perez Martinez Joshua Emiliano, Cruz UgaldeOziel, Mancilla Ramos Jesus
+* **Institución:** UTSJR (Universidad Tegnologica de San Juan del Rio)
