@@ -1,30 +1,22 @@
-# Nexo Digital - Sistema Multiplataforma y Móvil
+# 🛒 NexoTek (Nexo Digital) — App Final & Multiplatform Module
 
-Este repositorio hace la entrega final de la Aplicacion **Nexo Digital**, estructurado en dos módulos independientes para su evaluación.
-
----
-
-##  1. Aplicación Móvil (Android Nativo)
-* **Ubicación:** `/app`
-* **Tecnologías:** Kotlin, Jetpack Compose, MVVM, Retrofit, SharedPreferences, POO.
-* **Características:**
-  * Arquitectura limpia en MVVM (Model-View-ViewModel).
-  * Consumo de servicios REST con Retrofit.
-  * Gestión de sesión local y borrado de memoria (US02 - Logout).
-  * Programacion Orientada a Objetos.
+Repositorio oficial del proyecto de desarrollo de software para la gestión de plataforma digital / catálogo de e-commerce.
 
 ---
 
-##  2. Aplicación Multiplataforma (Flet / Python)
-* **Ubicación:** `/FLET-fake store`
-* **Tecnologías:** Python, Flet Framework, REST API.
-* **Características:**
-  * Interfaz gráfica reactiva para escritorio y web.
-  * Mapeo de rutas y vistas (`login_view.py`, `home_view.py`).
-  * Integración de peticiones HTTP a FakeStoreAPI.
+## 🏛️ Identificación Institucional
+* **Institución**: Universidad Tecnológica de San Juan del Río (UTSJR)
+* **Carrera / Programa**: Desarrollo de Software Multiplataforma / Ingeniería en Tecnologías de la Información e Innovación Digital
+* **Autores / Desarrolladores**: 
+  * Joshua Emiliano Pérez Martínez (Kotlin / Android Native & Arquitectura)
+  * Colaborador / Equipo (Módulo Flet / Python Cross-Platform)
+* **Fecha de Actualización**: Septiembre de 2026
 
 ---
 
-##  Autor
-* **Desarrollador:** Perez Martinez Joshua Emiliano, Cruz UgaldeOziel, Mancilla Ramos Jesus
-* **Institución:** UTSJR (Universidad Tegnologica de San Juan del Rio)
+## 📱 Estructura del Repositorio
+```text
+NexoDigital/
+├── app/                  # Aplicación nativa en Kotlin (Jetpack Compose / Android)
+├── flet_python_app/      # Interfaz y lógica complementaria en Python (Flet)
+└── README.md             # Documentación del proyecto
