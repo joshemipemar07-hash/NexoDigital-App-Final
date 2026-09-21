@@ -1,4 +1,4 @@
-package com.example.nexodigital.ui.theme
+package com.example.nexodigital.view
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

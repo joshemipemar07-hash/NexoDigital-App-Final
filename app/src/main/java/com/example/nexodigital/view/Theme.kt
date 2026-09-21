@@ -1,6 +1,5 @@
-package com.example.nexodigital.ui.theme
+package com.example.nexodigital.view
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

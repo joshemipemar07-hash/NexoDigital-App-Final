@@ -1,4 +1,4 @@
-package com.example.nexodigital.ui.theme
+package com.example.nexodigital.view
 
 import androidx.compose.ui.graphics.Color
 
