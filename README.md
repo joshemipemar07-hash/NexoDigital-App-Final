@@ -8,7 +8,7 @@ Repositorio oficial del proyecto de desarrollo de software para la gestión de p
 * **Institución**: Universidad Tecnológica de San Juan del Río (UTSJR) 
 * **Curso / Proyecto**: Desarrollo Multiplataforma y Móvil
 * **Repositorio GitHub**: [NexoDigital-App-Final](https://github.com/joshemipemar07-hash/NexoDigital-App-Final)
-* **Fecha de Actualización**: 20 de Septiembre del 2026
+* **Fecha de Actualización**: 01 de octubre del 2026
 
 ---
 
@@ -26,5 +26,5 @@ Repositorio oficial del proyecto de desarrollo de software para la gestión de p
 ```text
 NexoDigital/
 ├── app/                  # Módulo Móvil Nativo (/app): Android Studio con Kotlin, Jetpack Compose, MVVM y Retrofit 
-├── flet_python_app/      # Módulo Multiplataforma (/FLET-fake store): Python con Flet, arquitectura MVC/POO y FakeStoreAPI 
-└── README.md             # Guía de navegación para el evaluador 
+├── flet_python_app/      # Módulo Multiplataforma (/flet_ecommerce): Python con Flet, arquitectura MVC/POO y FakeStoreAPI 
+└── README.md             # Guía de navegación para el profe 
