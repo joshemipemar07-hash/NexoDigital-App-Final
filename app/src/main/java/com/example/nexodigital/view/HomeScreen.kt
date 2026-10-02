@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +23,7 @@ fun HomeScreen(
     authController: AuthController,
     productController: ProductController,
     onProductClick: (Int) -> Unit,
+    onAddProductClick: () -> Unit, // <--- NUEVO: Callback para navegar a AddProductScreen
     onLogout: () -> Unit
 ) {
     // Inicializa la carga de productos y categorías al abrir la vista
@@ -29,96 +32,119 @@ fun HomeScreen(
         productController.loadCategories()
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        // aqui damos la bienvenida
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("Catálogo - ${authController.getRole()}", style = MaterialTheme.typography.titleLarge)
-            Button(onClick = onLogout) {
-                Text("Salir")
+    // 1. Obtenemos el rol del usuario actual con el authController
+    val userRole = authController.getRole()
+
+    Scaffold(
+        floatingActionButton = {
+            // 2. Solo mostramos el botón flotante si el rol es administrador
+            if (userRole.equals("admin", ignoreCase = true) || userRole.equals("Administrador", ignoreCase = true)) {
+                FloatingActionButton(
+                    onClick = onAddProductClick,
+                    containerColor = MaterialTheme.colorScheme.primary
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Agregar Producto",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
-
-        // Barra de filtros para las categorías
-        LazyRow(
+    ) { paddingValues ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .fillMaxSize()
+                .padding(paddingValues) // Respeta el espacio del Scaffold
         ) {
-            item {
-                FilterChip(
-                    selected = productController.selectedCategory == null,
-                    onClick = { productController.resetFilter() },
-                    label = { Text("Todos") }
-                )
-            }
-            items(productController.categories) { categoryName ->
-                FilterChip(
-                    selected = productController.selectedCategory == categoryName,
-                    onClick = { productController.filterByCategory(categoryName) },
-                    label = { Text(categoryName.replaceFirstChar { it.uppercase() }) }
-                )
-            }
-        }
-
-        // Indicador de carga visual (Spinner)
-        if (productController.isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else if (productController.errorMessage != null) {
-            Box(
+            // aqui damos la bienvenida
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                contentAlignment = Alignment.Center
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = productController.errorMessage!!, color = MaterialTheme.colorScheme.error)
+                Text("Catálogo - ${authController.getRole()}", style = MaterialTheme.typography.titleLarge)
+                Button(onClick = onLogout) {
+                    Text("Salir")
+                }
             }
-        } else {
-            // Lista de productos
-            LazyColumn(
+
+            // Barra de filtros para las categorías
+            LazyRow(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(productController.products) { product ->
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onProductClick(product.id) }
-                    ) {
-                        Row(
+                item {
+                    FilterChip(
+                        selected = productController.selectedCategory == null,
+                        onClick = { productController.resetFilter() },
+                        label = { Text("Todos") }
+                    )
+                }
+                items(productController.categories) { categoryName ->
+                    FilterChip(
+                        selected = productController.selectedCategory == categoryName,
+                        onClick = { productController.filterByCategory(categoryName) },
+                        label = { Text(categoryName.replaceFirstChar { it.uppercase() }) }
+                    )
+                }
+            }
+
+            // Indicador de carga visual (Spinner)
+            if (productController.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else if (productController.errorMessage != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = productController.errorMessage!!, color = MaterialTheme.colorScheme.error)
+                }
+            } else {
+                // Lista de productos
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(productController.products) { product ->
+                        Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                                .clickable { onProductClick(product.id) }
                         ) {
-                            AsyncImage(
-                                model = product.image,
-                                contentDescription = product.title,
-                                modifier = Modifier.size(64.dp)
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(product.title, style = MaterialTheme.typography.titleMedium)
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text("$${product.price}", style = MaterialTheme.typography.bodyLarge)
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                AsyncImage(
+                                    model = product.image,
+                                    contentDescription = product.title,
+                                    modifier = Modifier.size(64.dp)
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(product.title, style = MaterialTheme.typography.titleMedium)
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text("$${product.price}", style = MaterialTheme.typography.bodyLarge)
+                                }
                             }
                         }
                     }
